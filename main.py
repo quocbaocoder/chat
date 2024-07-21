@@ -386,3 +386,8 @@ try:
 except:
     time.sleep(5)
     pass        
+
+#Set objShell = CreateObject("WScript.Shell")
+#objShell.Run "cmd /c cd /d D:\Quoc Bao\chat-telegrambot && pythonw.exe main.py", 0, False
+
+#tạo file vbs
